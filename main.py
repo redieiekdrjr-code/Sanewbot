@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
 from aiogram.types import Message
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("sanewbot")
@@ -21,8 +21,7 @@ dp = Dispatcher()
 
 JOKES = [
     "Почему программист не любит природу? Там слишком много багов 🌳",
-    "— Бот, ты умный?
-— Я стараюсь, но иногда зависаю 🤖",
+    "— Бот, ты умный? — Я стараюсь, но иногда зависаю 🤖",
     "Что сказал ноль восьмёрке? Классный ремень! 😄",
 ]
 
