@@ -1,9 +1,9 @@
 (()=>{'use strict';
-const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');let W=0,H=0,dpr=1,active=false,last=0,keys={},joy={x:0,y:0},pointer=null,attackCd=0,superCharge=0,gems=0,trophies=0,player,bots=[],shots=[],crystals=[],particles=[],hp=100;
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');let W=0,H=0,dpr=1,active=false,last=0,keys={},joy={x:0,y:0},pointer=null,attackCd=0,superCharge=0,gems=0,trophies=Number(localStorage.getItem('sanew-stars-trophies')||0),player,bots=[],shots=[],crystals=[],particles=[],hp=100;
 const $=id=>document.getElementById(id),rand=(a,b)=>a+Math.random()*(b-a),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}addEventListener('resize',resize);resize();
 function reset(){player={x:W/2,y:H/2,r:19,speed:220,color:'#39a9ff',face:0};bots=Array.from({length:4},(_,i)=>({x:rand(45,W-45),y:rand(100,H-120),r:18,hp:70,max:70,color:['#ff5b69','#bd74ff','#ff9f43','#38d6a3'][i],face:0,think:rand(0,2),vx:0,vy:0}));shots=[];crystals=Array.from({length:8},()=>({x:rand(35,W-35),y:rand(90,H-90),r:10,spin:rand(0,6)}));particles=[];hp=100;gems=0;superCharge=0;attackCd=0;updateHud()}
-function updateHud(){$('trophies').textContent=trophies;$('gems').textContent=gems;$('hp').textContent=Math.max(0,Math.ceil(hp));$('super').style.opacity=superCharge>=100?1:.55}
+function updateHud(){localStorage.setItem('sanew-stars-trophies',String(trophies));$('trophies').textContent=trophies;$('gems').textContent=gems;$('hp').textContent=Math.max(0,Math.ceil(hp));$('super').style.opacity=superCharge>=100?1:.55}
 function move(o,dx,dy,dt){const m=Math.hypot(dx,dy)||1;o.x=clamp(o.x+dx/m*o.speed*dt,25,W-25);o.y=clamp(o.y+dy/m*o.speed*dt,82,H-25)}
 function shoot(from,angle,enemy=false,big=false){shots.push({x:from.x+Math.cos(angle)*22,y:from.y+Math.sin(angle)*22,vx:Math.cos(angle)*(big?440:390),vy:Math.sin(angle)*(big?440:390),life:.9,owner:enemy?'bot':'player',r:big?12:7,damage:big?55:22,color:enemy?'#ff626e':'#ffe36b'})}
 function burst(x,y,color){for(let i=0;i<8;i++){let a=rand(0,Math.PI*2),s=rand(40,150);particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:.45,color})}}
