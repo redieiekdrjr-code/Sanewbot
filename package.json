@@ -1,0 +1,13 @@
+{
+  "name": "sanew-stars",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sanew Stars browser arena game and realtime server",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  }
+}
